@@ -1,4 +1,4 @@
-@extends('layouts.index')
+@extends('layouts.FHNS.index')
 
 @section('content')
 <form action="{{ url('kategori') }}" method="post">

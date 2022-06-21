@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrmawaController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KategoriController;
@@ -17,11 +16,14 @@ use App\Http\Controllers\userOrmawaController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/index', function () {
+    return view('index');
 });
-Route::get('/home', function () {
-    return view('welcome');
+Route::get('/', function () {
+    return view('index');
+});
+Route::get('/test', function () {
+    return view('layouts/FHNS/index');
 });
 
 Route::resource('ormawa',OrmawaController::class);
