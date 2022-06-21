@@ -1,4 +1,4 @@
-@extends('layouts.index')
+@extends('layouts.FHNS.index')
 
 @section('content')
 <form action="{{ url('barang/'.$model->id) }}" method="POST" enctype="multipart/form-data">

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Barang;
 use App\Models\Kategori;
 use App\Models\Ormawa;
@@ -16,9 +17,13 @@ class BarangController extends Controller
      */
     public function index()
     {
-        $data_barang = Barang::with('Kategori','Ormawa')->paginate(5);
+        $kat = Kategori::all();
+        $orm = Ormawa::all();
+        $data_barang = Barang::with('Kategori', 'Ormawa')->paginate(5);
         return view('barang.index', compact(
-            'data_barang'
+            'data_barang',
+            'kat',
+            'orm'
         ));
     }
 
@@ -33,7 +38,9 @@ class BarangController extends Controller
         $orm = Ormawa::all();
         $model = new Barang;
         return view('barang.create', compact(
-            'model','kat','orm'
+            'model',
+            'kat',
+            'orm'
         ));
     }
 
@@ -46,7 +53,7 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         $nm = $request->foto;
-        $nmFile = time().rand(100,999).".".$nm->getClientOriginalName();
+        $nmFile = time() . rand(100, 999) . "." . $nm->getClientOriginalName();
 
         $model = new Barang;
         $model->nm_barang = $request->nm_barang;
@@ -55,7 +62,7 @@ class BarangController extends Controller
         $model->qty = $request->qty;
         $model->foto = $nmFile;
 
-        $nm->move(public_path().'/img',$nmFile );
+        $nm->move(public_path() . '/img', $nmFile);
 
         $model->save();
 
@@ -83,9 +90,11 @@ class BarangController extends Controller
     {
         $kat = Kategori::all();
         $orm = Ormawa::all();
-        $model = Barang::with('kategori','ormawa')->find($id);
+        $model = Barang::with('kategori', 'ormawa')->find($id);
         return view('barang.update', compact(
-            'model','kat','orm'
+            'model',
+            'kat',
+            'orm'
         ));
     }
 
@@ -97,14 +106,14 @@ class BarangController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
-        $file = public_path('/img/').$request->oldImage;
+    {
+        $file = public_path('/img/') . $request->oldImage;
 
         if (file_exists($file)) {
             @unlink($file);
-    }
+        }
         $nm = $request->foto;
-        $nmFile = time().rand(100,999).".".$nm->getClientOriginalName();
+        $nmFile = time() . rand(100, 999) . "." . $nm->getClientOriginalName();
 
         $model = Barang::find($id);
         $model->nm_barang = $request->nm_barang;
@@ -112,9 +121,9 @@ class BarangController extends Controller
         $model->ormawa_id = $request->ormawa_id;
         $model->qty = $request->qty;
         $model->foto = $nmFile;
-        
-        $nm->move(public_path().'/img',$nmFile );
-        
+
+        $nm->move(public_path() . '/img', $nmFile);
+
         $model->update();
         return redirect('barang');
     }
@@ -127,8 +136,14 @@ class BarangController extends Controller
      */
     public function destroy($id)
     {
+
         $model = Barang::find($id);
-        $model ->delete();
+        $file = public_path('/img/') . $model->foto;
+
+        if (file_exists($file)) {
+            @unlink($file);
+        }
+        $model->delete();
         return redirect('barang');
     }
 }
