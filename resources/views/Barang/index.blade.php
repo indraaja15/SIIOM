@@ -1,5 +1,11 @@
 @extends('layouts.FHNS.index')
-
+@section('head')
+    <center>
+        <div class="col-sm-6">
+            <h1 class="m-0"><small class="text-center">Daftar Barang</small></h1>
+        </div>
+    </center>
+@endsection
 @section('content')
     <button type="button" class="btn btn-info  fas fa-plus-square mb-4" data-toggle="modal"
         data-target=".bd-example-modal-lg">Tambah</button>
@@ -28,7 +34,8 @@
                 <td>{{ $value->ormawa->nm_ormawa }}</td>
                 <td class="text-center">{{ $value->qty }}</td>
                 <td width="130px" class="text-center">
-                    <img src="{{ asset('img/' . $value->foto) }}" alt="" srcset="" width="100%" height="100%">
+                    <img src="{{ asset('img/' . $value->foto) }}" alt="" srcset="" width="100%"
+                        height="100%">
                 </td>
                 <td>
                     <center><a style="width:100px" class="btn btn-info fas fa-edit"
@@ -39,7 +46,8 @@
                         @method('delete')
                         @csrf
                         <center>
-                            <button style="width: 100px" class="btn btn-danger far fa-trash-alt " type="submit" onclick="return confirm('Yakin ingin hapus data?')">Delete</button>
+                            <button style="width: 100px" class="btn btn-danger far fa-trash-alt " type="submit"
+                                onclick="return confirm('Yakin ingin hapus data?')">Delete</button>
                         </center>
                     </form>
                 </td>
@@ -77,7 +85,8 @@
                         <input type="number" name="qty" class="form-control" placeholder="Qty" id="qty"><br>
                         <div class="input-group mb-3">
                             <img class="img-preview img-fluid">
-                            <input type="file" class="form-control" id="foto" name="foto" onchange="previewImage">
+                            <input type="file" class="form-control" id="foto" name="foto"
+                                onchange="previewImage">
                             <label class="input-group-text" for="foto">Upload</label>
                         </div>
                         <button type="submit" class="btn btn-info ">Simpan</button>

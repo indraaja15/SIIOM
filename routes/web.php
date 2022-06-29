@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrmawaController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\userOrmawaController;
+use App\Http\Controllers\loginController;
+use App\Http\Controllers\daftarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,20 +17,22 @@ use App\Http\Controllers\userOrmawaController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/index', function () {
-    return view('index');
-});
+
 Route::get('/', function () {
     return view('index');
 });
-Route::get('/test', function () {
-    return view('layouts/FHNS/index');
-});
 
-Route::resource('ormawa',OrmawaController::class);
-Route::resource('barang',BarangController::class);
-Route::resource('kategori',KategoriController::class);
-Route::resource('userOrmawa',userOrmawaController::class);
+route::get('/login',[loginController::class,'index'])->name('login')->middleware('guest');
+route::post('/login',[loginController::class,'login']);
+route::post('/logout',[loginController::class,'logout']);
+
+route::get('/daftar',[daftarController::class,'index'])->middleware('guset');
+route::POST('/daftar',[daftarController::class,'store']);
+
+Route::resource('ormawa',OrmawaController::class)->middleware('auth');
+Route::resource('barang',BarangController::class)->middleware('auth');
+Route::resource('kategori',KategoriController::class)->middleware('auth');
+
 
 
 

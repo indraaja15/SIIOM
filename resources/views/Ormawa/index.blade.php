@@ -1,11 +1,17 @@
 @extends('layouts.FHNS.index')
-
+@section('head')
+    <center>
+        <div class="col-sm-6">
+            <h1 class="m-0"><small class="text-center">Daftar Organisasi Mahasiswa</small></h1>
+        </div>
+    </center>
+@endsection
 @section('content')
     <button type="button" class="btn btn-info  fas fa-plus-square mb-4" data-toggle="modal"
         data-target=".bd-example-modal-lg">Tambah</button>
         <br>
     <table class="table ">
-        <thead class="thead-dark">
+        <thead class="thead">
             <tr>
                 <th style="width: 70%">Nama Organisasi Mahasiswa</th>
                 <th colspan="2" style="width: 30%" class="text-center">Aksi</th>
