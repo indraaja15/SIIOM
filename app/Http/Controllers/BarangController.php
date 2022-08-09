@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Kategori;
 use App\Models\Ormawa;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,16 +18,35 @@ class BarangController extends Controller
      */
     public function index()
     {
+        $user = User::with('Ormawa');
         $kat = Kategori::all();
         $orm = Ormawa::all();
         $data_barang = Barang::with('Kategori', 'Ormawa')->paginate(5);
-        return view('barang.index', compact(
+        return view('Barang.index', compact(
             'data_barang',
             'kat',
+            'user',
             'orm'
         ));
     }
-
+    public function ormawaLain()
+    {
+        $datas = Ormawa::all();
+        return view('Barang.pilihOrmawa', compact(
+            'datas'
+        ));
+    }
+    public function cek($id)
+    {
+        $idormawa = $id;
+        $brg = Barang::with('ormawa')->paginate(5);
+        $orm = Ormawa::all();
+        return view('Barang.barangOrmawaLain', compact(
+            'brg',
+            'orm',
+            'idormawa'
+        ));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -37,7 +57,7 @@ class BarangController extends Controller
         $kat = Kategori::all();
         $orm = Ormawa::all();
         $model = new Barang;
-        return view('barang.create', compact(
+        return view('Barang.create', compact(
             'model',
             'kat',
             'orm'
@@ -61,6 +81,7 @@ class BarangController extends Controller
         $model->ormawa_id = $request->ormawa_id;
         $model->qty = $request->qty;
         $model->foto = $nmFile;
+        $model->status =$request->status;
 
         $nm->move(public_path() . '/img', $nmFile);
 
@@ -91,7 +112,7 @@ class BarangController extends Controller
         $kat = Kategori::all();
         $orm = Ormawa::all();
         $model = Barang::with('kategori', 'ormawa')->find($id);
-        return view('barang.update', compact(
+        return view('Barang.update', compact(
             'model',
             'kat',
             'orm'
@@ -107,22 +128,18 @@ class BarangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $file = public_path('/img/') . $request->oldImage;
-
-        if (file_exists($file)) {
-            @unlink($file);
-        }
-        $nm = $request->foto;
-        $nmFile = time() . rand(100, 999) . "." . $nm->getClientOriginalName();
-
         $model = Barang::find($id);
         $model->nm_barang = $request->nm_barang;
         $model->kategori_id = $request->kategori_id;
         $model->ormawa_id = $request->ormawa_id;
         $model->qty = $request->qty;
-        $model->foto = $nmFile;
+        $model->foto = $request->oldImage;
+        $model->status= $request->status;
 
-        $nm->move(public_path() . '/img', $nmFile);
+        $nm = $request->foto;
+        if (file_exists($nm)) {
+            $nm->move(public_path().'/img', $request->oldImage);
+         }
 
         $model->update();
         return redirect('barang');
@@ -145,5 +162,13 @@ class BarangController extends Controller
         }
         $model->delete();
         return redirect('barang');
+    }
+
+    public function detail()
+    {
+        $data_barang = Barang::with('ormawa')->paginate(10);
+        return view('Barang.detailbarang', compact(
+            'data_barang'
+        ));
     }
 }

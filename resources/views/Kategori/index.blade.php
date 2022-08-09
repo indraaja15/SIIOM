@@ -1,34 +1,55 @@
 @extends('layouts.FHNS.index')
-
+@section('head')
+    <div class="col-sm-6">
+        <h1 class="m-0"><small class="text-center">Daftar Kategori</small></h1>
+    </div>
+@endsection
 @section('content')
-    <button type="button" class="btn btn-info  fas fa-plus-square mb-4" data-toggle="modal"
-        data-target=".bd-example-modal-lg">Tambah</button> <br>
-    <table class="table ">
-        <thead class="thead">
-            <tr>
-                <th style="width: 70%">Nama Kategori</th>
-                <th colspan="2" style="width:30%" class="text-center">Aksi</th>
-            </tr>
-        </thead>
-        @foreach ($datas as $key => $value)
-            <tr>
-                <td>{{ $value->nm_kategori }}</td>
-                <td>
-                    <center><a class="btn btn-info fas fa-edit" style="width:100px"
-                            href="{{ url('kategori/' . $value->id . '/edit') }}"> Edit</a></center>
-                </td>
-                <td>
-                    <form action="{{ url('kategori/' . $value->id) }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="_method" value="DELETE">
-                        <center><button class="btn btn-danger far fa-trash-alt" style="width:100px" type="submit" onclick="return confirm('Yakin ingin hapus data?')"> Delete
-                            </button></center>
-                    </form>
-                </td>
-            </tr>
-        @endforeach
+    <div class="container">
+        <div class="card-header">
+            <div class="card-body">
+                <button type="button" class="btn btn-info  fas fa-plus-square mb-4" data-toggle="modal"
+                    data-target=".bd-example-modal-lg">Tambah</button>
 
-    </table>
+                <br>
+                <table class="table table-stripped" id="tampil2">
+                    <thead class="thead">
+                        <tr>
+                            <th style="width: 10%" class="text-center">No</th>
+                            <th style="width: 70%">Nama Kategori</th>
+                            <th class="text-center">Aksi</th>
+
+                        </tr>
+                    </thead>
+                    @php
+                        $nomor = 1;
+                    @endphp
+                    <tbody>
+                        @foreach ($datas as $key => $value)
+                            <tr>
+                                <td class="text-center">{{ $nomor }}</td>
+                                <td>{{ $value->nm_kategori }}</td>
+                                <td>
+                                    <center><a class="btn btn-info fas fa-edit" style="width:100px"
+                                            href="{{ url('kategori/' . $value->id . '/edit') }}"> Edit</a></center>
+                                    {{-- <form action="{{ url('kategori/' . $value->id) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="_method" value="DELETE">
+                            <center><button class="btn btn-danger far fa-trash-alt" style="width:100px" type="submit"
+                                    onclick="return confirm('Yakin ingin hapus data?')"> Delete
+                                </button></center>
+                        </form> --}}
+                                </td>
+                            </tr>
+                            @php
+                                $nomor++;
+                            @endphp
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     {{-- modal tambah --}}
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
         aria-hidden="true">
@@ -46,5 +67,4 @@
             </div>
         </div>
     </div>
-
 @endsection

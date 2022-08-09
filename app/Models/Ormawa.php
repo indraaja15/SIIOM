@@ -14,5 +14,9 @@ class Ormawa extends Model
     {
         return $this->hasMany(Barang::class);
     }
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
 
 }
