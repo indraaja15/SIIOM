@@ -29,7 +29,7 @@
                 </td>
                 <td>
                     <center><a class="btn btn-warning bi bi-search" style="width:150px"
-                            href="{{ url('lihat/' . $value->id) }}"> Detail Barang</a></center>
+                            href="{{ url('cek/' . $value->id) }}"> Detail Barang</a></center>
                 </td>
                 <td>
                     <form action="{{ url('ormawa/' . $value->id) }}" method="POST">
