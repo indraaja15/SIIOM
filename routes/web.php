@@ -22,7 +22,7 @@ use App\Http\Controllers\adminControl;
 */
 
 
-route::get('/',[berandaController::class,'index']);
+
 route::get('Barang.detailbarang',[BarangController::class,'detail']);
 route::get('Ormawa.ormawaDetail',[ormawaController::class,'detail']);
 
@@ -58,6 +58,7 @@ Route::Group(['middleware'=>['auth','akses:user']],function() {
 
 Route::Group(['middleware'=>['auth','akses:admin,user']],function() {
     route::post('/logout',[loginController::class,'logout']);
+    route::get('/',[berandaController::class,'index']);
 });
 
 
