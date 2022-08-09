@@ -45,4 +45,8 @@ class User extends Authenticatable
     {
         return $this->beLongsTo(Ormawa::class);
     }
+    public function peminjaman()
+    {
+        return $this->hasMany(peminjaman::class);
+    }
 }

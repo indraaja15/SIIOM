@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ormawa;
+use App\Models\Barang;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\AssignOp\Mod;
@@ -17,8 +18,19 @@ class OrmawaController extends Controller
     public function index()
     {
         $datas = Ormawa::all();
-        return view('ormawa.index', compact(
+        return view('Ormawa.index', compact(
             'datas'
+        ));
+    }
+    public function lihat($id)
+    {
+        $idormawa = $id;
+        $brg = Barang::with('ormawa')->paginate(5);
+        $orm = Ormawa::all();
+        return view('Ormawa.ormawaDetail', compact(
+            'brg',
+            'orm',
+            'idormawa'
         ));
     }
 
@@ -30,7 +42,7 @@ class OrmawaController extends Controller
     public function create()
     {
         $model = new ormawa;
-        return view('ormawa.create', compact(
+        return view('Ormawa.create', compact(
             'model'
         ));
     }
@@ -70,7 +82,7 @@ class OrmawaController extends Controller
     public function edit($id)
     {
         $model = Ormawa::find($id);
-        return view('ormawa.update', compact(
+        return view('Ormawa.update', compact(
             'model'
         ));
     }
@@ -104,5 +116,12 @@ class OrmawaController extends Controller
        $model = Ormawa::find($id);
        $model ->delete();
        return redirect('ormawa');
+    }
+    public function detail()
+    {
+        $datas = Ormawa::all();
+        return view('Ormawa.ormawaDetail', compact(
+            'datas'
+        ));
     }
 }

@@ -1,28 +1,35 @@
 @extends('layouts.FHNS.index')
 @section('head')
     <center>
-        <div class="col-sm-6">
             <h1 class="m-0"><small class="text-center">Daftar Organisasi Mahasiswa</small></h1>
-        </div>
     </center>
 @endsection
 @section('content')
     <button type="button" class="btn btn-info  fas fa-plus-square mb-4" data-toggle="modal"
         data-target=".bd-example-modal-lg">Tambah</button>
         <br>
-    <table class="table ">
+    <table class="table " id="tampil1">
         <thead class="thead">
             <tr>
-                <th style="width: 70%">Nama Organisasi Mahasiswa</th>
-                <th colspan="2" style="width: 30%" class="text-center">Aksi</th>
+                <th style="width: 10%" class="text-center">No</th>
+                <th style="width: 60%">Nama Organisasi Mahasiswa</th>
+                <th colspan="3" style="width: 30%" class="text-center">Aksi</th>
             </tr>
         </thead>
+        @php
+            $nomor=1;
+        @endphp
         @foreach ($datas as $key => $value)
             <tr>
+                <td class="text-center">{{ $nomor }}</td>
                 <td>{{ $value->nm_ormawa }}</td>
                 <td>
                     <center><a class="btn btn-info fas fa-edit" style="width:100px"
                             href="{{ url('ormawa/' . $value->id . '/edit') }}"> Edit</a></center>
+                </td>
+                <td>
+                    <center><a class="btn btn-warning bi bi-search" style="width:150px"
+                            href="{{ url('lihat/' . $value->id) }}"> Detail Barang</a></center>
                 </td>
                 <td>
                     <form action="{{ url('ormawa/' . $value->id) }}" method="POST">
@@ -33,6 +40,9 @@
                     </form>
                 </td>
             </tr>
+            @php
+                $nomor++;
+            @endphp
         @endforeach
     </table>
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"

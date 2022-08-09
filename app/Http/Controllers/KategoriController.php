@@ -14,7 +14,7 @@ class KategoriController extends Controller
     public function index()
     {
         $datas = Kategori::all();
-        return view('kategori.index', compact(
+        return view('Kategori.index', compact(
             'datas'
         ));
     }
@@ -67,7 +67,7 @@ class KategoriController extends Controller
     public function edit($id)
     {
         $model = Kategori::find($id);
-        return view('kategori.update', compact(
+        return view('Kategori.update', compact(
             'model'
         ));
     }
@@ -102,4 +102,5 @@ class KategoriController extends Controller
         $model->delete();
         return redirect('kategori');
     }
+
 }
