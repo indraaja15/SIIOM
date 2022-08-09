@@ -52,13 +52,14 @@ Route::Group(['middleware'=>['auth','akses:user']],function() {
     route::POST('kembali/{id}',[PeminjamanController::class,'kembali']);
     route::POST('surat/{id}',[PeminjamanController::class,'surat']);
     route::GET('pilih/{id}',[PeminjamanController::class,'pilih']);
-    route::GET('cek/{id}',[BarangController::class,'cek']);
+    
     route::GET('ormawaLain',[BarangController::class,'ormawaLain']);
 });
 
 Route::Group(['middleware'=>['auth','akses:admin,user']],function() {
     route::post('/logout',[loginController::class,'logout']);
     route::get('/',[berandaController::class,'index']);
+    route::GET('cek/{id}',[BarangController::class,'cek']);
 });
 
 
