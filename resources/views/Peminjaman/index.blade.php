@@ -77,9 +77,12 @@
                                         </a>
                                     </center>
                                 </td>
+                            @elseif ($p->status == 'Menunggu')
+                            <td><span class="badge badge-warning">{{ $p->status }}</span></td>
+                            <td><button class="btn btn-info" disabled>Menunggu Konfirmasi</button></td>
                             @else
-                                <td><span class="badge badge-warning">{{ $p->status }}</span></td>
-                                <td><button class="btn btn-info" disabled>Menunggu Konfirmasi</button></td>
+                                <td><span class="badge badge-danger">{{ $p->status }}</span></td>
+                                <td><button class="btn btn-danger" disabled>Ditolak</button></td>
                             @endif
                         </tr>
                         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"

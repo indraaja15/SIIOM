@@ -12,15 +12,16 @@
                     <thead class="thead">
                         <tr>
                             <th class="text-center"style="width: 1%">No</th>
-                            <th style="width: 10%">Dari Ormawa</th>
-                            <th style="width: 10%">Nama Peminjam</th>
+                            <th>Dari Ormawa</th>
+                            <th >Nama Peminjam</th>
+                            <th >No Telp</th>
                             <th class="text-center">Nama Barang</th>
-                            <th class="text-center" style="width: 10%">Tanggal Peminjaman</th>
-                            <th class="text-center" style="width: 10%">Tanggal Pengembalian</th>
-                            <th class="text-center">Qty</th>
-                            <th class="text-center" style="width: 10%">Surat Pengajuan</th>
+                            <th class="text-center" >Tanggal Peminjaman</th>
+                            <th class="text-center" >Tanggal Pengembalian</th>
+                            <th style="width: 1%">Qty</th>
+                            <th class="text-center" >Surat Pengajuan</th>
                             <th class="text-center">Status</th>
-                            <th class="text-center"style="width: 10%">Aksi</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     @php
@@ -33,6 +34,7 @@
                                 <td>{{ $nomor }}</td>
                                 <td>{{ $p->user->ormawa->nm_ormawa }}</td>
                                 <td>{{ $p->nm_peminjam }}</td>
+                                <td>{{ $p->no_telp }}</td>
                                 <td>
                                     @foreach ($p->barang as $b)
                                         <li>{{ $b->nm_barang }}</li>
@@ -100,6 +102,13 @@
                                             </a>
                                         </center>
                                     </td>
+                                @else
+                                <td class="text-center"><span class="badge badge-danger">{{ $p->status }}</span>
+                                </td>
+                                <td>
+                                    <center><button class="btn btn-danger" disabled>Ditolak</button>
+                                    </center>
+                                </td>
                                 @endif
                             </tr>
                             @php

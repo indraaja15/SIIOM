@@ -52,6 +52,7 @@ Route::Group(['middleware'=>['auth','akses:user']],function() {
     route::POST('kembali/{id}',[PeminjamanController::class,'kembali']);
     route::POST('surat/{id}',[PeminjamanController::class,'surat']);
     route::GET('pilih/{id}',[PeminjamanController::class,'pilih']);
+    route::GET('tolak/{id}',[PeminjamanController::class,'tolak']);
     
     route::GET('ormawaLain',[BarangController::class,'ormawaLain']);
 });
