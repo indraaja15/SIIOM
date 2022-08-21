@@ -39,9 +39,9 @@
                                                     @if ($item->status == '1')
                                                         (Baik)
                                                     @elseif ($item->status == '2')
-                                                        (Kurang Baik)
+                                                        (Cukup Baik)
                                                     @else
-                                                        (Rusak)
+                                                        (Kurang Baik)
                                                     @endif
                                                 </option>
                                             @else
@@ -102,9 +102,9 @@
                             @if ($item->status == '1')
                                 "(Baik) " +
                             @elseif($item->status == '2')
-                                "(Kurang Baik) " +
+                                "(Cukup Baik) " +
                             @else
-                                "(Rusak) " +
+                                "(Kurang Baik) " +
                             @endif
                             "</option>" +
                         @else

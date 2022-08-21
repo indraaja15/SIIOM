@@ -40,7 +40,7 @@ function active($currect_page)
                 @auth
                     @if (auth()->user()->hak_akses == 'admin')
                         <li class="nav-item">
-                            <a href="/" class="nav-link <?php active(''); ?>">
+                            <a href="siiom.tami2022.my.id" class="nav-link <?php active('siiom.tami2022.my.id'); ?>">
                                 <i class="nav-icon bi bi-house-fill"></i>
                                 <p>
                                     Beranda
@@ -74,7 +74,7 @@ function active($currect_page)
                         </li>
                     @else
                         <li class="nav-item">
-                            <a href="/" class="nav-link <?php active('/'); ?>">
+                            <a href="/" class="nav-link <?php active(''); ?>">
                                 <i class="nav-icon bi bi-house-fill"></i>
                                 <p>
                                     Beranda

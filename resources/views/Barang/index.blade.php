@@ -47,11 +47,11 @@
                                 @if ($value->status == '1')
                                     <td><span class="badge badge-success text-light" style="width: 90px">Baik</span></td>
                                 @elseif ($value->status == '2')
-                                    <td><span class="badge badge-warning text-light"style="width: 90px">Kurang Baik</span>
+                                    <td><span class="badge badge-warning text-light"style="width: 90px">Cukup Baik</span>
                                     </td>
                                 @else
-                                    <td><span class="badge badge-danger text-light"style="width: 90px">Rusak</span>
-                                        <t /d>
+                                    <td><span class="badge badge-danger text-light"style="width: 90px">Kurang Baik</span>
+                                    </td>
                                 @endif
 
                                 <td class="text-center">{{ $value->kategori->nm_kategori }}</td>
@@ -97,9 +97,11 @@
                     <form action="{{ url('barang') }}" method="post" enctype="multipart/form-data">
                         <div class="card-body">
                             @csrf
-                            <input type="Text" name="nm_barang" class="form-control" placeholder="Nama Barang" required><br>
+                            <input type="Text" name="nm_barang" class="form-control" placeholder="Nama Barang"
+                                required><br>
                             <div class="form-group mb-4">
-                                <select name="kategori_id" id="kategori_id" class="form-select" style="width: 100%" required>
+                                <select name="kategori_id" id="kategori_id" class="form-select" style="width: 100%"
+                                    required>
                                     <option value=''>Pilih Kategori</option>
                                     @foreach ($kat as $item)
                                         <option value="{{ $item->id }}">{{ $item->nm_kategori }}</option>
@@ -107,7 +109,8 @@
                                 </select>
                             </div>
 
-                            <input type="number" name="qty" class="form-control" placeholder="Qty" id="qty" required><br>
+                            <input type="number" name="qty" class="form-control" placeholder="Qty" id="qty"
+                                required><br>
                             <div class="mb-3">
                                 <input class="form-control @error('foto') is-invalid @enderror" name="foto"
                                     type="file" id="formFile" placeholder="Foto Barang" required>
@@ -115,9 +118,9 @@
                             <input type="radio" name="status" id="status1" value="1">
                             <label for="status1">Baik</label>
                             <input type="radio" name="status" id="status2" value="2">
-                            <label for="status2">Kurang Baik</label>
+                            <label for="status2">Cukup Baik</label>
                             <input type="radio" name="status" id="status3" value="3">
-                            <label for="status2">Rusak</label>
+                            <label for="status2">Tidak Baik</label>
                             <br>
                             <input type="hidden" name="ormawa_id" value="{{ auth()->user()->ormawa_id }}"><br>
                             <button type="submit" class="btn btn-info ">Simpan</button>

@@ -19,7 +19,7 @@ class BarangController extends Controller
     public function index()
     {
         $user = User::with('Ormawa');
-        $kat = Kategori::all();
+        $kat = Kategori::orderBy('nm_kategori','ASC')->get();
         $orm = Ormawa::all();
         $data_barang = Barang::with('Kategori', 'Ormawa')->orderBy('nm_barang','ASC')->get();
         return view('Barang.index', compact(
@@ -171,7 +171,7 @@ class BarangController extends Controller
 
     public function detail()
     {
-        $data_barang = Barang::with('ormawa')->get();
+        $data_barang = Barang::with('ormawa')orderBy('nm_barang','ASC')->get();
         return view('Barang.detailbarang', compact(
             'data_barang'
         ));
