@@ -24,15 +24,21 @@ class daftarController extends Controller
       ]);
       $validateData = $request->validate([
         'ormawa_id'=>'required',
-        'username' =>'required','min:5','unique:users',
+        'username' =>'required|unique:users',
         'password' =>'required|min:5',
         'hak_akses'=>'required',
         
       ]);
       $validateData['password'] = Hash::make($validateData['password']);
 
-      User::create($validateData);
-      $request->session()->flash('success','Daftar Akun Berhasil !');
-      return redirect('/login');
+      
+      
+      if (User::create($validateData)) {
+        return redirect('/login')->with('success','Daftar Akun Berhasil !');
+        
+      }else{
+      
+      return back;
+      }
     }
 }

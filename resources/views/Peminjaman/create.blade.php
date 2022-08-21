@@ -32,7 +32,8 @@
                                     <option value=''>- Pilih Barang -</option>
                                     @foreach ($brg as $item)
                                         @if ($item->ormawa_id == $idormawa)
-                                            @if ($item->qty != '0')
+                                        {{ $qtymax = $item->qty }}
+                                            @if ($item->qty !='0')
                                                 <option value="{{ $item->id }}">
                                                     {{ $item->nm_barang }}
                                                     @if ($item->status == '1')
@@ -50,6 +51,7 @@
                                                 </option>
                                             @endif
                                         @endif
+                                        
                                     @endforeach
                                 </select>
 
@@ -59,8 +61,12 @@
                                     </div>
                                 @enderror
                             </td>
-                            <td><input type="number" id="qty1" name="qty1" class="form-control" placeholder="Qty">
-                            </td>
+                            <td><input type="number" id="qty1"  name="qty1" class="form-control @error('qty1') is-invalid @enderror" placeholder="Qty">
+                            </td>@error('qty1')
+                            <div class="invalid-feedback">
+                                {{ 'hbs' }}
+                            </div>
+                        @enderror
                             <th class="text-center"><button class="btn btn-info" onclick="tambahBrg();"
                                     style="width:40px">+</button></th>
 
@@ -84,7 +90,7 @@
             var brg = document.getElementById("brg").value;
             var barang;
             barang = "<tr id='srow"+brg+"'>" +
-                "<td>" +
+                "<td style='width: 80%'>" +
                 "<select name='barang_id" + brg + "' id='barang_id" + brg +
                 "' class='form-select @error('barang_id"+brg+"') is-invalid @enderror' aria-label='.form-select- example'  required>" +
                 "<option value=''>- Pilih Barang -</option>" +
@@ -111,12 +117,12 @@
                 @endforeach
             "</select>" +
             "</td>" +
-            "<td ><input type='number' id='qty" + brg + "' name='qty" + brg +
+            "<td style='width: 20%'><input type='number' id='qty" + brg + "' name='qty" + brg +
                 "' class='form-control' placeholder='Qty'></td>" +
-                "<td class='text-center'>" +
+                "<th class='text-center'>" +
                 " <button type='button' id='btnhapusbrg" + brg +
                 "' style='width: 40px' class='btn btn-danger ' onclick='hapusbrg(\"#srow" + brg +"\"); return false;'>-</button>" +
-                "</td>" +
+                "</th>" +
                 "</tr>"
             $("#trBarang").append(barang);
             brg = (brg - 1) + 2;

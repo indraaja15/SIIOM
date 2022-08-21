@@ -7,6 +7,12 @@
     </center>
 @endsection
 @section('content')
+@if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>    
+        <strong>{{ $message }}</strong>
+    </div>
+    @endif
     <div class="container">
         <div class="card-header">
             <button type="button" class="btn btn-info  fas fa-plus-square mb-2 ml-3" data-toggle="modal"
@@ -46,7 +52,7 @@
                                 @if ($value->qty != '0')
                                     <td class="text-center">{{ $value->qty }}</td>
                                 @else
-                                    <td><span class="text-center badge badge-info text-light">Barang Dipinjam</span></td>
+                                    <td><span class="text-center badge badge-info text-light">Barang Habis Dipinjam</span></td>
                                 @endif
 
                                 <td width="130px" class="hilang-print text-center">

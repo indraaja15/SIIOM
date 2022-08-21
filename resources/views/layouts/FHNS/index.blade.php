@@ -29,7 +29,7 @@
 </head>
 
 
-<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" id="#layoutBody">
     <div class="wrapper">
 
         @include('layouts.navbar')
@@ -54,5 +54,6 @@
 
         
 </body>
+
 @include('layouts.footer')
 </html>

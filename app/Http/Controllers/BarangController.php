@@ -21,7 +21,7 @@ class BarangController extends Controller
         $user = User::with('Ormawa');
         $kat = Kategori::all();
         $orm = Ormawa::all();
-        $data_barang = Barang::with('Kategori', 'Ormawa')->paginate(5);
+        $data_barang = Barang::with('Kategori', 'Ormawa')->orderBy('nm_barang','ASC')->paginate(5);
         return view('Barang.index', compact(
             'data_barang',
             'kat',
@@ -31,7 +31,7 @@ class BarangController extends Controller
     }
     public function ormawaLain()
     {
-        $datas = Ormawa::all();
+        $datas = Ormawa::orderBy('nm_ormawa','asc')->get();
         return view('Barang.pilihOrmawa', compact(
             'datas'
         ));
@@ -87,7 +87,8 @@ class BarangController extends Controller
 
         $model->save();
 
-        return redirect('barang');
+        return redirect('barang')
+        ->with('success','Data Barang Berhasil Ditambah');
     }
 
     /**

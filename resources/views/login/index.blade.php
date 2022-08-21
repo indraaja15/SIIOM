@@ -41,7 +41,7 @@
             </button>
         </div>
     @endif
-    <h3 style="text-center">SISTEM INFORMASI INVENTARIS ORGANISASI MAHASISWA</h3>
+    <h3 class="text-center text-white">SISTEM INFORMASI INVENTARIS ORGANISASI MAHASISWA</h3>
     <img src="images/logoPoliban.png" class="rounded float-left mb-3" width="200">
 
     <div class="login-box ">
