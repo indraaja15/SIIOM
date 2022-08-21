@@ -31,7 +31,7 @@ class BarangController extends Controller
     }
     public function ormawaLain()
     {
-        $datas = Ormawa::all();
+        $datas = Ormawa::orderBy('nm_ormawa','asc')->get();
         return view('Barang.pilihOrmawa', compact(
             'datas'
         ));

@@ -119,7 +119,7 @@ class OrmawaController extends Controller
     }
     public function detail()
     {
-        $datas = Ormawa::all();
+        $datas = Ormawa::orderBy('nm_ormawa','asc')->get();
         return view('Ormawa.ormawaDetail', compact(
             'datas'
         ));

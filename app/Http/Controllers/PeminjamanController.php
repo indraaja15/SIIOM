@@ -50,7 +50,7 @@ class PeminjamanController extends Controller
     public function pilihormawa()
     {
         $user = User::with('ormawa');
-        $datas = Ormawa::all();
+        $datas = Ormawa::orderBy('nm_ormawa','asc')->get();
         return view('Peminjaman.pilihormawa', compact(
             'datas',
             'user'
