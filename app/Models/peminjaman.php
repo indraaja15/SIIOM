@@ -18,9 +18,9 @@ class peminjaman extends Model
     {
         return $this->hasmany(detailPeminjaman::class);
     }
-    public function barang()
+    public function Barang()
     {
-        return $this->beLongsToMany(barang::class);
+        return $this->beLongsToMany(Barang::class);
     }
 
 }

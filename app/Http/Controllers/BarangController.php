@@ -72,6 +72,10 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
+        $validateData = $request->validate([
+            'foto'=>'image|file|max:1024',
+            
+          ]);
         $nm = $request->foto;
         $nmFile = time() . rand(100, 999) . "." . $nm->getClientOriginalName();
 

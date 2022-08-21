@@ -7,12 +7,18 @@
     </center>
 @endsection
 @section('content')
-@if ($message = Session::get('success'))
-    <div class="alert alert-success alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>    
-        <strong>{{ $message }}</strong>
-    </div>
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
     @endif
+    @error('foto')
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Size Foto terlalu besar Makasimal 1 mb</strong>
+        </div>
+    @enderror
     <div class="container">
         <div class="card-header">
             <button type="button" class="btn btn-info  fas fa-plus-square mb-2 ml-3" data-toggle="modal"
@@ -52,7 +58,8 @@
                                 @if ($value->qty != '0')
                                     <td class="text-center">{{ $value->qty }}</td>
                                 @else
-                                    <td><span class="text-center badge badge-info text-light">Barang Habis Dipinjam</span></td>
+                                    <td><span class="text-center badge badge-info text-light">Barang Habis Dipinjam</span>
+                                    </td>
                                 @endif
 
                                 <td width="130px" class="hilang-print text-center">
@@ -102,8 +109,8 @@
 
                             <input type="number" name="qty" class="form-control" placeholder="Qty" id="qty"><br>
                             <div class="mb-3">
-                                <input class="form-control" name="foto" type="file" id="formFile"
-                                    placeholder="Foto Barang">
+                                <input class="form-control @error('foto') is-invalid @enderror" name="foto"
+                                    type="file" id="formFile" placeholder="Foto Barang">
                             </div>
                             <input type="radio" name="status" id="status1" value="1">
                             <label for="status1">Baik</label>
