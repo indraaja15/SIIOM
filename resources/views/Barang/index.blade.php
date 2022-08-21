@@ -97,9 +97,9 @@
                     <form action="{{ url('barang') }}" method="post" enctype="multipart/form-data">
                         <div class="card-body">
                             @csrf
-                            <input type="Text" name="nm_barang" class="form-control" placeholder="Nama Barang"><br>
+                            <input type="Text" name="nm_barang" class="form-control" placeholder="Nama Barang" required><br>
                             <div class="form-group mb-4">
-                                <select name="kategori_id" id="kategori_id" class="form-select" style="width: 100%">
+                                <select name="kategori_id" id="kategori_id" class="form-select" style="width: 100%" required>
                                     <option value=''>Pilih Kategori</option>
                                     @foreach ($kat as $item)
                                         <option value="{{ $item->id }}">{{ $item->nm_kategori }}</option>
@@ -107,10 +107,10 @@
                                 </select>
                             </div>
 
-                            <input type="number" name="qty" class="form-control" placeholder="Qty" id="qty"><br>
+                            <input type="number" name="qty" class="form-control" placeholder="Qty" id="qty" required><br>
                             <div class="mb-3">
                                 <input class="form-control @error('foto') is-invalid @enderror" name="foto"
-                                    type="file" id="formFile" placeholder="Foto Barang">
+                                    type="file" id="formFile" placeholder="Foto Barang" required>
                             </div>
                             <input type="radio" name="status" id="status1" value="1">
                             <label for="status1">Baik</label>

@@ -1,13 +1,13 @@
 @extends('layouts.FHNS.index')
 @section('head')
     <center>
-            <h1 class="m-0"><small class="text-center">Daftar Organisasi Mahasiswa</small></h1>
+        <h1 class="m-0"><small class="text-center">Daftar Organisasi Mahasiswa</small></h1>
     </center>
 @endsection
 @section('content')
     <button type="button" class="btn btn-info  fas fa-plus-square mb-4" data-toggle="modal"
         data-target=".bd-example-modal-lg">Tambah</button>
-        <br>
+    <br>
     <table class="table " id="tampil1">
         <thead class="thead">
             <tr>
@@ -17,7 +17,7 @@
             </tr>
         </thead>
         @php
-            $nomor=1;
+            $nomor = 1;
         @endphp
         @foreach ($datas as $key => $value)
             <tr>
@@ -35,7 +35,8 @@
                     <form action="{{ url('ormawa/' . $value->id) }}" method="POST">
                         @csrf
                         <input type="hidden" name="_method" value="DELETE">
-                        <center> <button style="width:100px" class="btn btn-danger far fa-trash-alt" type="submit" onclick="return confirm('Yakin ingin hapus data?')"> Delete
+                        <center> <button style="width:100px" class="btn btn-danger far fa-trash-alt" type="submit"
+                                onclick="return confirm('Yakin ingin hapus data?')"> Delete
                             </button></center>
                     </form>
                 </td>
