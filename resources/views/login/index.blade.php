@@ -21,10 +21,10 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('') }}asset/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-    
+
 </head>
 
-<body class="hold-transition login-page" style="background-image: url('images/background.jpg');background-size: 1650px">
+<body class="hold-transition login-page" style="background-image: url('images/background.jpg');background-size: cover">
     @if (session()->has('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -41,17 +41,17 @@
             </button>
         </div>
     @endif
-    <h3>SISTEM INFORMASI INVENTARIS ORGANISASI MAHASISWA</h3>
+    <h3 style="text-center">SISTEM INFORMASI INVENTARIS ORGANISASI MAHASISWA</h3>
     <img src="images/logoPoliban.png" class="rounded float-left mb-3" width="200">
 
     <div class="login-box ">
         <div class="card " style="border-radius: 10px;">
             <div class="card-body login-card-body " style="border-radius: 100px;">
-                
+
                 <form action="/login" method="post" style="padding : 10px">
                     @csrf
                     <center>
-                        
+
                         <h2 class="text-center mb-3">LOGIN</h2>
                     </center>
                     <div class="input-group mb-3">
@@ -85,7 +85,7 @@
             </div>
             <!-- /.login-card-body -->
         </div>
-        
+
     </div>
     <!-- /.login-box -->
 

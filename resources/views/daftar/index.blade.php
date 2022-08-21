@@ -30,7 +30,7 @@
 </head>
 <h2>Daftar User Baru</h2>
 
-<body class="hold-transition login-page" style="background-image: url('images/background.jpg');background-size: 100%">
+<body class="hold-transition login-page" style="background-image: url('images/background.jpg');background-size: cover">
     <img src="images/logoPoliban.png" class="rounded float-left mb-3" width="200">
 
     <div class="login-box">

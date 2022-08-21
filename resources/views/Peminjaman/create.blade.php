@@ -79,11 +79,11 @@
             </div>
         </form>
     </div>
-    <script>
+<script>
         function tambahBrg() {
             var brg = document.getElementById("brg").value;
             var barang;
-            barang = "<tr>" +
+            barang = "<tr id='srow"+brg+"'>" +
                 "<td>" +
                 "<select name='barang_id" + brg + "' id='barang_id" + brg +
                 "' class='form-select @error('barang_id"+brg+"') is-invalid @enderror' aria-label='.form-select- example'  required>" +
@@ -121,6 +121,10 @@
             $("#trBarang").append(barang);
             brg = (brg - 1) + 2;
             document.getElementById("brg").value = brg;
+        }
+
+        function hapusbrg(brg){
+            $(brg).remove();
         }
     </script>
 @endsection

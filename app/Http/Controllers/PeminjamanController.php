@@ -159,6 +159,14 @@ class PeminjamanController extends Controller
             return redirect('konfirmasi');
         ;
     }
+    public function tolak($id)
+    {
+        $model = peminjaman::find($id);
+        $model->status = "Ditolak";
+            $model->update();
+            return redirect('konfirmasi');
+        ;
+    }
     public function serah(Request $request,$id)
     {
         $idpeminjaman =$id;
