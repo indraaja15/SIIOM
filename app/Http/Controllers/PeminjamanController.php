@@ -33,7 +33,7 @@ class PeminjamanController extends Controller
     }
     public function konfirmasi()
     {
-        $user = User::with('ormawa')->paginate(10);
+        $user = User::with('ormawa')->get();
         $peminjaman = peminjaman::with('user','barang')->orderBy('id','desc')->get();
         $brg = Barang::all();
         $orm = Ormawa::all();

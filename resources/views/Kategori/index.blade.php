@@ -74,7 +74,7 @@
                             @csrf
                             <input type="Text" name="nm_kategori"
                                 class="form-control @error('nm_kategori') is-invalid @enderror"
-                                placeholder="Nama Kategori"><br>
+                                placeholder="Nama Kategori" required><br>
                             <button type="submit"
                                 class="btn btn-info @error('simpan') is-invalid @enderror">Simpan</button>
 

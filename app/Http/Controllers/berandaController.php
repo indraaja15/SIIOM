@@ -20,7 +20,7 @@ class berandaController extends Controller
         $kategori = Kategori::count();
         $user = User::all();
         $orm = ormawa::all();
-        $peminjaman = peminjaman::with('user')->paginate(10);
+        $peminjaman = peminjaman::with('user')->get();
         $brg = Barang::all();
         $dp = barang_peminjaman::all();
         return view('index', compact(

@@ -21,7 +21,7 @@ class BarangController extends Controller
         $user = User::with('Ormawa');
         $kat = Kategori::all();
         $orm = Ormawa::all();
-        $data_barang = Barang::with('Kategori', 'Ormawa')->orderBy('nm_barang','ASC')->paginate(5);
+        $data_barang = Barang::with('Kategori', 'Ormawa')->orderBy('nm_barang','ASC')->get();
         return view('Barang.index', compact(
             'data_barang',
             'kat',
@@ -39,7 +39,7 @@ class BarangController extends Controller
     public function cek($id)
     {
         $idormawa = $id;
-        $brg = Barang::with('ormawa')->paginate(5);
+        $brg = Barang::with('ormawa')->get();
         $orm = Ormawa::all();
         return view('Barang.barangOrmawaLain', compact(
             'brg',
@@ -171,7 +171,7 @@ class BarangController extends Controller
 
     public function detail()
     {
-        $data_barang = Barang::with('ormawa')->paginate(10);
+        $data_barang = Barang::with('ormawa')->get();
         return view('Barang.detailbarang', compact(
             'data_barang'
         ));

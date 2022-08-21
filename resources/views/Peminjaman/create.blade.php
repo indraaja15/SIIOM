@@ -12,9 +12,9 @@
                 <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                 <input type="hidden" name="status" value="Menunggu">
                 <label for="nm_peminjam">Nama Peminjam</label>
-                <input type="Text" name="nm_peminjam" class="form-control" placeholder="Nama Peminjam">
+                <input type="Text" name="nm_peminjam" class="form-control" placeholder="Nama Peminjam" required>
                 <label for="" class="mt-2">No Telpon</label>
-                <input type="Text" name="no_telp" class="form-control mb-2" placeholder="No Telp">
+                <input type="Text" name="no_telp" class="form-control mb-2" placeholder="No Telp" required>
                 <table>
                     <thead>
                         <tr>
@@ -61,7 +61,7 @@
                                     </div>
                                 @enderror
                             </td>
-                            <td><input type="number" id="qty1"  name="qty1" class="form-control @error('qty1') is-invalid @enderror" placeholder="Qty">
+                            <td><input type="number" id="qty1"  name="qty1" class="form-control @error('qty1') is-invalid @enderror" placeholder="Qty" required>
                             </td>@error('qty1')
                             <div class="invalid-feedback">
                                 {{ 'hbs' }}
@@ -75,9 +75,9 @@
                     </tbody>
                 </table>
                 <label for="" class="mt-2">Tanggal Peminjaman</label>
-                <input type="date" name="tgl_peminjaman" class="form-control" placeholder="Tanggal Peminjaman">
+                <input type="date" name="tgl_peminjaman" class="form-control" placeholder="Tanggal Peminjaman" required>
                 <label for="" class="mt-2">Tanggal Pengembalian</label>
-                <input type="date" name="tgl_pengembalian" class="form-control" placeholder="Tanggal Pengembalian">
+                <input type="date" name="tgl_pengembalian" class="form-control" placeholder="Tanggal Pengembalian"required>
                 <label for="" class="mt-2">Surat Pengajuan</label>
                 <input type="file" name="suratPengajuan" class="form-control" required>
 
@@ -118,7 +118,7 @@
             "</select>" +
             "</td>" +
             "<td style='width: 20%'><input type='number' id='qty" + brg + "' name='qty" + brg +
-                "' class='form-control' placeholder='Qty'></td>" +
+                "' class='form-control' placeholder='Qty' required></td>" +
                 "<th class='text-center'>" +
                 " <button type='button' id='btnhapusbrg" + brg +
                 "' style='width: 40px' class='btn btn-danger ' onclick='hapusbrg(\"#srow" + brg +"\"); return false;'>-</button>" +
