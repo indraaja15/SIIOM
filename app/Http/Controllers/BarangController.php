@@ -171,7 +171,7 @@ class BarangController extends Controller
 
     public function detail()
     {
-        $data_barang = Barang::with('ormawa')->paginate(10);
+        $data_barang = Barang::with('ormawa')->get();
         return view('Barang.detailbarang', compact(
             'data_barang'
         ));
