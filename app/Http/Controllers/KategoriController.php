@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 class KategoriController extends Controller
 {
@@ -13,7 +14,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        $datas = Kategori::all();
+        $datas = Kategori::orderBy('nm_kategori','asc')->get();
         return view('Kategori.index', compact(
             'datas'
         ));
@@ -40,11 +41,25 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        $model = new Kategori;
-        $model->nm_kategori = $request->nm_kategori;
-        $model->save();
+        
 
-        return redirect('kategori');
+        // return redirect('kategori')
+        // ->with('success','Kategori Berhasil Ditambah');
+
+        $validateData = $request->validate([
+            'nm_kategori'=>'required|unique:kategori',
+            
+          ]);
+          $model = new Kategori;
+          $model->nm_kategori = $request->nm_kategori;
+        
+          if ($model->save()) {
+            return redirect('/kategori')->with('success','Kategori Berhasil Ditambah !');
+            
+          }else{
+          
+          return back;
+          }
     }
 
     /**

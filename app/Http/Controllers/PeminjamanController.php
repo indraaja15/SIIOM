@@ -21,7 +21,7 @@ class PeminjamanController extends Controller
     public function index()
     {
         $user = User::all();
-        $peminjaman = peminjaman::with('user')->get();
+        $peminjaman = peminjaman::with('user')->orderBy('id','desc')->get();
         $brg = Barang::all();
         $dp = barang_peminjaman::all();
         return view('Peminjaman.index', compact(
@@ -34,7 +34,7 @@ class PeminjamanController extends Controller
     public function konfirmasi()
     {
         $user = User::with('ormawa')->paginate(10);
-        $peminjaman = peminjaman::with('user','barang')->paginate(10);
+        $peminjaman = peminjaman::with('user','barang')->orderBy('id','desc')->get();
         $brg = Barang::all();
         $orm = Ormawa::all();
         $dp = barang_peminjaman::all();

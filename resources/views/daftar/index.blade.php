@@ -5,7 +5,7 @@
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,7 +28,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 </head>
-<h2>Daftar User Baru</h2>
+<h2 class="text-center text-white">Daftar User Baru</h2>
 
 <body class="hold-transition login-page" style="background-image: url('images/background.jpg');background-size: cover">
     <img src="images/logoPoliban.png" class="rounded float-left mb-3" width="200">
@@ -39,27 +39,33 @@
                 <form action="/daftar" method="POST" style="padding : 20px" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group mb-3">
-                        <select name="ormawa_id" id="ormawa_id" class="form-select @error('ormawa_id') is-invalid @enderror" aria-label=".form-select- example"
-                            style="width: 100%" required>
+                        <select name="ormawa_id" id="ormawa_id"
+                            class="form-select @error('ormawa_id') is-invalid @enderror"
+                            aria-label=".form-select- example" style="width: 100%" required>
                             <option value=''>Pilih Organisasi</option>
                             @foreach ($orm as $item)
                                 <option value="{{ $item->id }}">{{ $item->nm_ormawa }}</option>
                             @endforeach
                         </select>
                         @error('ormawa_id')
-                        <div class="invalid-feedback">
-                            {{ 'Silahkan Pilih Organisasi' }}
-                        </div>
-                    @enderror
+                            <div class="invalid-feedback">
+                                {{ 'Silahkan Pilih Organisasi' }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control @error('username') is-invalid @enderror"
                             placeholder="Username" name="username" value="{{ old('username') }}">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class=""></span>
+                                
                             </div>
                         </div>
+                        @error('username')
+                            <div class="invalid-feedback">
+                                {{ 'Username Sudah Terdaftar' }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" class="form-control @error('password') is-invalid @enderror"

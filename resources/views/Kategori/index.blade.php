@@ -5,6 +5,18 @@
     </div>
 @endsection
 @section('content')
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
+    @error('nm_kategori')
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Nama Kategori Sudah Terdaftar </strong>
+        </div>
+    @enderror
     <div class="container">
         <div class="card-header">
             <div class="card-body">
@@ -30,8 +42,9 @@
                                 <td class="text-center">{{ $nomor }}</td>
                                 <td>{{ $value->nm_kategori }}</td>
                                 <td>
-                                    <center><a class="btn btn-info fas fa-edit" style="width:100px"
+                                    <center><a class="btn btn-info fas fa-edit " style="width:100px"
                                             href="{{ url('kategori/' . $value->id . '/edit') }}"> Edit</a></center>
+
                                     {{-- <form action="{{ url('kategori/' . $value->id) }}" method="POST">
                             @csrf
                             <input type="hidden" name="_method" value="DELETE">
@@ -59,8 +72,17 @@
                     <div class="card-body">
                         <div class="form-group">
                             @csrf
-                            <input type="Text" name="nm_kategori" class="form-control" placeholder="Nama Kategori"><br>
-                            <button type="submit" class="btn btn-info ">Simpan</button>
+                            <input type="Text" name="nm_kategori"
+                                class="form-control @error('nm_kategori') is-invalid @enderror"
+                                placeholder="Nama Kategori"><br>
+                            <button type="submit"
+                                class="btn btn-info @error('simpan') is-invalid @enderror">Simpan</button>
+
+                            @error('username')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                     </div>
                 </form>
