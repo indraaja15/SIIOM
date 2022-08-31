@@ -11,7 +11,7 @@
                 @csrf
                 <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                 <input type="hidden" name="status" value="Menunggu">
-                <input type="hidden" name="dari" value="@php $idormawa @endphp">
+                <input type="hidden" name="dari" id="dari" value="{{ $idormawa }}">
                 <label for="nm_peminjam">Nama Peminjam</label>
                 <input type="Text" name="nm_peminjam" class="form-control"
                     placeholder="Nama Peminjam"value="{{ old('nm_peminjam') }}" required>
