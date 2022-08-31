@@ -2,7 +2,7 @@
 @section('head')
     @if (auth()->user()->hak_akses == 'user')
         <center>
-            <h1 class="m-0"><small class="text-center">Data Pengembalian Barang</small></h1>
+            <h1 class="m-0"><small class="text-center">Data Barang Yang Sudah Dikembalikan</small></h1>
         </center>
     @else
         <center>

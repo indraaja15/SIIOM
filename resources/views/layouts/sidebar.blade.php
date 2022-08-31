@@ -164,7 +164,7 @@ function active($currect_page)
                                 <li class="nav-item">
                                     <a href="{{ '../../selesai' }}" class="nav-link <?php active('selesai'); ?>">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Data Pengembalian Barang</p>
+                                        <p>Data Barang Sudah Dikembalikan</p>
                                     </a>
                                 </li>
                             </ul>
