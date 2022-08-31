@@ -9,7 +9,7 @@
 <div class="container-fluid">
     <div class="card-header">
         <i class="fas fa-edit"></i> <span>Input Detail Barang Penyerahan</span><br>
-    <form action="/penyerahan" method="post" enctype="multipart/form-data">
+    <form action="/penyerahanBrg" method="post" enctype="multipart/form-data">
         <div class="body">
         @csrf
         @php

@@ -213,7 +213,7 @@ class PeminjamanController extends Controller
         ));
         // dd($penyerahan);
     }
-    public function penyerahan(Request $request)
+    public function penyerahanBrg(Request $request)
     {  
         $penyerahan = DB::table('barang_peminjaman')->where('peminjaman_id',$request->peminjaman_id)->get();
         $a = -1;
