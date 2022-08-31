@@ -77,7 +77,7 @@ Route::Group(['middleware'=>['auth','akses:user']],function() {
     route::POST('/penyerahan',[PeminjamanController::class,'penyerahan']);
     route::GET('detailPenyerahan/{id}',[PeminjamanController::class,'detailPenyerahan']);
     route::GET('validasi',[PeminjamanController::class,'validasi']);
-    route::GET('pengembalian',[PeminjamanController::class,'pengembalian']);
+    route::GET('selesai',[PeminjamanController::class,'pengembalian']);
 });
 Route::Group(['middleware'=>['auth','akses:user,opr']],function() {
     Route::resource('peminjaman',PeminjamanController::class);
