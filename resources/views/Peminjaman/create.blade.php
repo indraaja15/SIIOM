@@ -11,10 +11,13 @@
                 @csrf
                 <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                 <input type="hidden" name="status" value="Menunggu">
+                <input type="hidden" name="dari" value="@php $idormawa @endphp">
                 <label for="nm_peminjam">Nama Peminjam</label>
-                <input type="Text" name="nm_peminjam" class="form-control" placeholder="Nama Peminjam" required>
+                <input type="Text" name="nm_peminjam" class="form-control"
+                    placeholder="Nama Peminjam"value="{{ old('nm_peminjam') }}" required>
                 <label for="" class="mt-2">No Telpon</label>
-                <input type="Text" name="no_telp" class="form-control mb-2" placeholder="No Telp" required>
+                <input type="Text" name="no_telp" class="form-control mb-2" placeholder="No Telp"
+                    value="{{ old('no_telp') }}" required>
                 <table>
                     <thead>
                         <tr>
@@ -29,20 +32,13 @@
                                 <select name="barang_id1" id="barang_id1"
                                     class="form-select @error('barang_id1') is-invalid @enderror"
                                     aria-label=".form-select- example" required>
-                                    <option value=''>- Pilih Barang -</option>
+                                    <option value="">- Pilih Barang -</option>
                                     @foreach ($brg as $item)
                                         @if ($item->ormawa_id == $idormawa)
-                                        {{ $qtymax = $item->qty }}
-                                            @if ($item->qty !='0')
+                                            {{ $qtymax = $item->qty }}
+                                            @if ($item->qty != '0')
                                                 <option value="{{ $item->id }}">
                                                     {{ $item->nm_barang }}
-                                                    @if ($item->status == '1')
-                                                        (Baik)
-                                                    @elseif ($item->status == '2')
-                                                        (Cukup Baik)
-                                                    @else
-                                                        (Kurang Baik)
-                                                    @endif
                                                 </option>
                                             @else
                                                 <option disabled value="{{ $item->id }}">
@@ -51,7 +47,6 @@
                                                 </option>
                                             @endif
                                         @endif
-                                        
                                     @endforeach
                                 </select>
 
@@ -61,12 +56,15 @@
                                     </div>
                                 @enderror
                             </td>
-                            <td><input type="number" id="qty1"  name="qty1" class="form-control @error('qty1') is-invalid @enderror" placeholder="Qty" required>
-                            </td>@error('qty1')
-                            <div class="invalid-feedback">
-                                {{ 'hbs' }}
-                            </div>
-                        @enderror
+                            <td><input type="number" id="qty1" name="qty1"
+                                    class="form-control @error('qty1') is-invalid @enderror" placeholder="Qty"
+                                    value="{{ old('qty1') }}" required>
+                            </td>
+                            @error('qty1')
+                                <div class="invalid-feedback">
+                                    {{ 'hbs' }}
+                                </div>
+                            @enderror
                             <th class="text-center"><button class="btn btn-info" onclick="tambahBrg();"
                                     style="width:40px">+</button></th>
 
@@ -75,21 +73,29 @@
                     </tbody>
                 </table>
                 <label for="" class="mt-2">Tanggal Peminjaman</label>
-                <input type="date" name="tgl_peminjaman" class="form-control" placeholder="Tanggal Peminjaman" required>
+                <input type="date" name="tgl_peminjaman" class="form-control" placeholder="Tanggal Peminjaman"
+                    value="{{ old('tgl_peminjaman') }}"required>
                 <label for="" class="mt-2">Tanggal Pengembalian</label>
-                <input type="date" name="tgl_pengembalian" class="form-control" placeholder="Tanggal Pengembalian"required>
+                <input type="date" name="tgl_pengembalian" class="form-control" placeholder="Tanggal Pengembalian"
+                    value="{{ old('tgl_pengembalian') }}"required>
                 <label for="" class="mt-2">Surat Pengajuan</label>
-                <input type="file" name="suratPengajuan" class="form-control" required>
-
+                <input type="file" name="suratPengajuan"
+                    class="form-control @error('suratPengajuan') is-invalid @enderror" required>
+                <small class="text-danger">*Maksimal Ukuran File 2Mb</small><br>
+                @error('suratPengajuan')
+                    <div class="invalid-feedback">
+                        {{ 'Harap Kompress File' }}
+                    </div>
+                @enderror
                 <button type="submit" class="btn btn-info mt-3">Simpan</button>
             </div>
         </form>
     </div>
-<script>
+    <script>
         function tambahBrg() {
             var brg = document.getElementById("brg").value;
             var barang;
-            barang = "<tr id='srow"+brg+"'>" +
+            barang = "<tr id='srow" + brg + "'>" +
                 "<td style='width: 80%'>" +
                 "<select name='barang_id" + brg + "' id='barang_id" + brg +
                 "' class='form-select @error('barang_id"+brg+"') is-invalid @enderror' aria-label='.form-select- example'  required>" +
@@ -97,15 +103,8 @@
                 @foreach ($brg as $item)
                     @if ($item->ormawa_id == $idormawa)
                         @if ($item->qty != '0')
-                            "<option value='{{ $item->id }}'>"+
+                            "<option value='{{ $item->id }}'>" +
                             "{{ $item->nm_barang }}" +
-                            @if ($item->status == '1')
-                                "(Baik) " +
-                            @elseif($item->status == '2')
-                                "(Cukup Baik) " +
-                            @else
-                                "(Kurang Baik) " +
-                            @endif
                             "</option>" +
                         @else
                             "<option disabled value='{{ $item->id }}'>" +
@@ -121,7 +120,8 @@
                 "' class='form-control' placeholder='Qty' required></td>" +
                 "<th class='text-center'>" +
                 " <button type='button' id='btnhapusbrg" + brg +
-                "' style='width: 40px' class='btn btn-danger ' onclick='hapusbrg(\"#srow" + brg +"\"); return false;'>-</button>" +
+                "' style='width: 40px' class='btn btn-danger ' onclick='hapusbrg(\"#srow" + brg +
+                "\"); return false;'>-</button>" +
                 "</th>" +
                 "</tr>"
             $("#trBarang").append(barang);
@@ -129,7 +129,7 @@
             document.getElementById("brg").value = brg;
         }
 
-        function hapusbrg(brg){
+        function hapusbrg(brg) {
             $(brg).remove();
         }
     </script>

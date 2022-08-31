@@ -17,7 +17,7 @@ class OrmawaController extends Controller
      */
     public function index()
     {
-        $datas = Ormawa::all();
+        $datas = Ormawa::orderBy('nm_ormawa','ASC')->get();
         return view('Ormawa.index', compact(
             'datas'
         ));

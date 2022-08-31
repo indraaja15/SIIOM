@@ -14,13 +14,14 @@ class peminjaman extends Model
     {
         return $this->beLongsTo(User::class);
     }
-    public function detailPeminjaman()
+    public function barang_peminjaman()
     {
-        return $this->hasmany(detailPeminjaman::class);
+        return $this->hasmany(barang_peminjaman::class);
     }
     public function Barang()
     {
         return $this->beLongsToMany(Barang::class);
     }
+
 
 }

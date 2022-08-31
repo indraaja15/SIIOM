@@ -21,7 +21,7 @@ class BarangController extends Controller
         $user = User::with('Ormawa');
         $kat = Kategori::orderBy('nm_kategori','ASC')->get();
         $orm = Ormawa::all();
-        $data_barang = Barang::with('Kategori', 'Ormawa')->orderBy('nm_barang','ASC')->get();
+        $data_barang = Barang::with('Kategori', 'Ormawa','detail_barang')->orderBy('nm_barang','ASC')->get();
         return view('Barang.index', compact(
             'data_barang',
             'kat',
@@ -39,7 +39,7 @@ class BarangController extends Controller
     public function cek($id)
     {
         $idormawa = $id;
-        $brg = Barang::with('ormawa')->get();
+        $brg = Barang::with('ormawa')->orderBy('nm_barang','ASC')->get();
         $orm = Ormawa::all();
         return view('Barang.barangOrmawaLain', compact(
             'brg',
@@ -133,6 +133,10 @@ class BarangController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validateData = $request->validate([
+            'foto'=>'image|file|max:1024',
+            
+          ]);
         $model = Barang::find($id);
         $model->nm_barang = $request->nm_barang;
         $model->kategori_id = $request->kategori_id;
@@ -147,7 +151,7 @@ class BarangController extends Controller
          }
 
         $model->update();
-        return redirect('barang');
+        return redirect('barang')->with('success','Data Berhasil Di Ubah');
     }
 
     /**

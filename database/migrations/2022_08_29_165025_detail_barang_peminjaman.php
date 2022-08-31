@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\kategori;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('barang', function (Blueprint $table) {
+        Schema::create('detail_barang_peminjaman', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kategori_id')->constrained();
-            $table->foreignId('ormawa_id');
-            $table->string('nm_barang');
-            $table->integer('qty');
-            $table->string('foto');
-            
+            $table->foreignId('barang_id');
+            $table->foreignId('peminjaman_id');
+            $table->foreignId('kode_brg');
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('barang');
+        Schema::dropIfExists('detail_barang_peminjaman');
     }
 };

@@ -20,9 +20,13 @@ class barang extends Model
     {
         return $this->beLongsTo(Ormawa::class);
     }
-    public function detailPeminjaman()
+    public function barang_peminjaman()
     {
-        return $this->hasmany(detailPeminjaman::class);
+        return $this->hasmany(barang_peminjaman::class);
+    }
+    public function detail_barang()
+    {
+        return $this->hasMany(detail_barang::class);
     }
     public function peminjaman()
     {

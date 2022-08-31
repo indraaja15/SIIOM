@@ -1,114 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script language='JavaScript'>
-        var txt = "Inventaris Ormawa | Daftar ";
-        var speed = 300;
-        var refresh = null;
-
-        function action() {
-            document.title = txt;
-            txt = txt.substring(1, txt.length) + txt.charAt(0);
-            refresh = setTimeout("action()", speed);
-        }
-        action();
-    </script>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="asset/dist/css/adminlte.min.css">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-</head>
-<h2 class="text-center text-white">Daftar User Baru</h2>
-
-<body class="hold-transition login-page" style="background-image: url('images/background.jpg');background-size: cover">
-    <img src="images/logoPoliban.png" class="rounded float-left mb-3" width="200">
-
-    <div class="login-box">
-        <div class="card" style="border-radius: 10px;">
-            <div class="card-body login-card-body" style="border-radius: 100px;">
-                <form action="/daftar" method="POST" style="padding : 20px" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group mb-3">
-                        <select name="ormawa_id" id="ormawa_id"
-                            class="form-select @error('ormawa_id') is-invalid @enderror"
-                            aria-label=".form-select- example" style="width: 100%" required>
-                            <option value=''>Pilih Organisasi</option>
-                            @foreach ($orm as $item)
-                                <option value="{{ $item->id }}">{{ $item->nm_ormawa }}</option>
-                            @endforeach
-                        </select>
-                        @error('ormawa_id')
-                            <div class="invalid-feedback">
-                                {{ 'Silahkan Pilih Organisasi' }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control @error('username') is-invalid @enderror"
-                            placeholder="Username" name="username" value="{{ old('username') }}">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                
-                            </div>
-                        </div>
-                        @error('username')
-                            <div class="invalid-feedback">
-                                {{ 'Username Sudah Terdaftar' }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control @error('password') is-invalid @enderror"
-                            placeholder="Password" name="password">
-                        <label for="password"></label>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                            </div>
-                        </div>
-                        @error('password')
-                            <div class="invalid-feedback">
-                                {{ 'panjang minimal password 5' }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control @error('ulangi-password') is-invalid @enderror"
-                            placeholder="Ulangi Password" name="ulangi-password">
-                        <label for="ulangi-password"></label>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                            </div>
-                        </div>
-                        @error('ulangi-password')
-                            <div class="invalid-feedback">
-                                {{ 'Password Tidak sama' }}
-                            </div>
-                        @enderror
-                    </div>
-                    <input type="hidden" name="hak_akses" id="hak_akses" value="user">
-                    <button type="submit" class="w-100 btn bt-lg btn-primary mb-3">Daftar</button>
-                    <center><small class="mt-3">Sudah Memiliki akun? <a href="/login">Login !</a></small></center>
-
-                </form>
-            </div>
-            <!-- /.login-card-body -->
-        </div>
+@extends('layouts.FHNS.index')
+@section('head')
+    <div class="col-sm-6">
+        <h1 class="m-0"><small class="text-center">Tambah Akun Organisasi Mahasiswa</small></h1>
     </div>
-    <!-- /.login-box -->
+@endsection
+@section('content')
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
+    @error('ormawa_id')
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Akun Organisasi Mahasiswa Tersebut Sudah Ada</strong>
+        </div>
+    @enderror
+    @error('username')
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Username Tersebut Sudah Ada</strong>
+    </div>
+@enderror
+    <div class="container-fluid">
+        <button type="button" class="btn btn-info  fas fa-plus-square mb-4" data-toggle="modal"
+            data-target=".bd-example-modal-lg"> Tambah</button>
+        <table class="table ">
+            <thead class="thead">
+                <tr>
+                    <th style="width: 1%" class="text-center">No</th>
+                    <th class="">Organisasi Mahasiswa</th>
+                    <th class="">Username</th>
+                    <th class="text-center">Aksi</th>
+                </tr>
+            </thead>
+            @php
+                $nomor = 1;
+            @endphp
+            @foreach ($user as $u => $value)
+                @if ($value->hak_akses == 'user')
+                    <tr>
+                        <td class="text-center">{{ $nomor }}</td>
+                        <td>{{ $value->ormawa->nm_ormawa }}</td>
+                        <td>{{ $value->username }}</td>
+                        <td>
+                            <center><a style="width:200px" class="btn btn-info fas fa-edit mb-2"
+                                    href="{{ url('daftar/' . $value->id . '/edit') }}"> Edit Password </a></center>
 
+                            <form action="{{ url('daftar/' . $value->id) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="_method" value="DELETE">
+                                <center><button class="btn btn-danger far fa-trash-alt" style="width:200px" type="submit"
+                                        onclick="return confirm('Yakin ingin hapus data?')"> Delete
+                                    </button></center>
+                            </form>
+                        </td>
+                    </tr>
+                    @php
+                        $nomor++;
+                    @endphp
+                @endif
+            @endforeach
 
-    <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
-</body>
+            {{-- modal view --}}
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <form action="/daftar" method="post" enctype="multipart/form-data">
+                            <div class="card-body">
+                                @csrf
+                                <select name="ormawa_id" id="ormawa_id"
+                                    class="form-select  @error('ormawa_id') is-invalid @enderror" style="width: 100%"
+                                    required>
+                                    <option>Pilih Organisasi Mahasiswa</option>
+                                    @foreach ($orm as $o)
+                                        <option value="{{ $o->id }}">{{ $o->nm_ormawa }}</option>
+                                    @endforeach
+                                </select><br>
 
-</html>
+                                <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" placeholder="Username"
+                                    id="username"><br>
+                                <input type="password" name="password"
+                                    class="form-control @error('password') is-invalid @enderror" placeholder="Password"
+                                    id="password"><br>
+                                @error('password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <input type="password" name="ulangi-password"
+                                    class="form-control @error('ulangi-password') is-invalid @enderror" placeholder="ulangi-Password" id="ulangi-password"><br>
+                                @error('ulangi-password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <input type="hidden" name="hak_akses" id="hak_askses" value="user">
+                                <button type="submit" class="btn btn-info ">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+@endsection

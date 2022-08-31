@@ -1,7 +1,7 @@
   <!-- Main Footer -->
   <footer class="main-footer">
       <strong>Copyright &copy; 2022 <a href="/">SIIOM</a>.</strong>
-      All rights reserved.
+      All rights reserved. <a href="https://www.instagram.com/akhmad.indra/" class="mr-2"><small>By Indra</small></a><a href="https://www.instagram.com/z.bidah/"><small>Bidah</small></a>
       <div class="float-right d-none d-sm-inline-block">
 
       </div>
@@ -55,7 +55,14 @@
   <script src="{{ asset('') }}asset/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
   <script src="{{ asset('') }}asset/plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="{{ asset('') }}asset/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <script src="{{ asset('') }}asset/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
   <script>
+    $("input[data-bootstrap-switch]").each(function(){
+  $(this).bootstrapSwitch('state', $(this).prop('checked'));
+})
+</script>
+  <script>
+    
       $(function() {
           $("#tampil1").DataTable({
               "responsive": true,

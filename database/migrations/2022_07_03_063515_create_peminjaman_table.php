@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('tgl_peminjaman');
             $table->date('tgl_pengembalian');
             $table->string('status');
+            $table->string('dari'.1);
             $table->string('BaPeminjaman');
             $table->string('BaPengembalian');
             $table->string('suratPengajuan');

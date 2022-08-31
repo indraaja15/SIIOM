@@ -1,8 +1,16 @@
 @extends('layouts.FHNS.index')
 @section('head')
-    <center>
-        <h1 class="m-0"><small class="text-center">Konfirmasi Peminjaman</small></h1>
-    </center>
+@if (auth()->user()->hak_akses == 'user')
+<center>
+    <h1 class="m-0"><small class="text-center">Persetujuan Peminjaman</small></h1>
+</center>
+@else
+<center>
+    <h1 class="m-0"><small class="text-center">Barang Dipinjam</small></h1>
+</center>
+
+@endif
+    
 @endsection
 @section('content')
     <div class="container">
@@ -19,9 +27,14 @@
                             <th class="text-center" >Tanggal Peminjaman</th>
                             <th class="text-center" >Tanggal Pengembalian</th>
                             <th style="width: 1%">Qty</th>
+
+                            
+                            @if (auth()->user()->hak_akses == 'user')
                             <th class="text-center" >Surat Pengajuan</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Aksi</th>
+                            @endif
+                            
                         </tr>
                     </thead>
                     @php
@@ -29,7 +42,9 @@
                     @endphp
                     {{-- new --}}
                     @foreach ($peminjaman as $p)
-                        @if (auth()->user()->id != $p->user_id)
+                        @if (auth()->user()->ormawa_id == $p->dari)
+                        @if ($p->status != 'Selesai')
+
                             <tr>
                                 <td>{{ $nomor }}</td>
                                 <td>{{ $p->user->ormawa->nm_ormawa }}</td>
@@ -49,6 +64,8 @@
                                         @endif
                                     @endforeach
                                 </td>
+                                
+                                @if (auth()->user()->hak_akses == 'user')
                                 <td>
                                     <a class="btn btn-info fas fa-eye" href="{{ asset('pengajuan/' . $p->suratPengajuan) }}"
                                         target="_blank">
@@ -59,11 +76,13 @@
                                     <td class="text-center"><span class="badge badge-success">{{ $p->status }}</span>
                                     </td>
                                     <td>
-                                        <center>
+                                        <center><a class="btn btn-info fas fa-plus-square" style="width:170px"
+                                            href="{{ url('penyerahan/' . $p->id ) }}"> Penyerahan</a></center>
+                                        {{-- <center>
                                             <button type="button" class="btn btn-success  fas fa-plus-square mb-4"
                                                 data-toggle="modal" data-target="#serah{{ $p->id }}">Upload
                                                 Penyerahan</button>
-                                        </center>
+                                        </center> --}}
                                     </td>
                                 @elseif ($p->status == 'Diserahkan')
                                     <td class="text-center"><span
@@ -71,9 +90,15 @@
                                     </td>
                                     <td width="130px" class="hilang-print text-center">
                                         <center>
-                                            <a class="btn btn-info fas fa-eye"
+                                            <a class="btn btn-info fas fa-eye" style="width: 170px"
                                                 href="{{ asset('penyerahan/' . $p->BaPeminjaman) }}" target="_blank">
                                                 Lihat Bukti
+                                            </a>
+                                        </center>
+                                        <center>
+                                            <a class="btn btn-info fas fa-eye mt-1" style="width: 170px"
+                                                href="{{url('detailPenyerahan/' . $p->id) }}">
+                                                Detail Barang
                                             </a>
                                         </center>
                                     </td>
@@ -81,9 +106,9 @@
                                     <td class="text-center"><span class="badge badge-warning">{{ $p->status }}</span>
                                     </td>
                                     <td>
-                                        <center><a class="btn btn-success mb-2 " style="width:100px"
-                                                href="{{ url('konfirmasi/' . $p->id) }}">Konfirmasi</a>
-                                            <a class="btn btn-danger " style="width:100px"
+                                        <center><a class="btn btn-success mb-2 " style="width:170px"
+                                                href="{{ url('konfirmasi/' . $p->id) }}">Setujui</a>
+                                            <a class="btn btn-danger " style="width:170px"
                                                 href="{{ url('tolak/' . $p->id) }}">Tolak</a>
                                         </center>
                                     </td>
@@ -102,11 +127,18 @@
                                             </a>
                                         </center>
                                     </td>
+                                @elseif ($p->status == 'Selesai')
+                                <td class="text-center"><span class="badge badge-danger">{{ $p->status }}</span>
+                                </td>
+                                <td>
+                                    <center><button class="btn btn-danger" disabled style="width: 170px">Selesai</button>
+                                    </center>
+                                </td>
                                 @else
                                 <td class="text-center"><span class="badge badge-danger">{{ $p->status }}</span>
                                 </td>
                                 <td>
-                                    <center><button class="btn btn-danger" disabled>Ditolak</button>
+                                    <center><button class="btn btn-danger" disabled style="width: 170px">Tolak</button>
                                     </center>
                                 </td>
                                 @endif
@@ -138,6 +170,9 @@
                                     </div>
                                 </div>
                             </div>
+                        @endif
+                        @endif
+                                                    
                         @endif
                     @endforeach
 

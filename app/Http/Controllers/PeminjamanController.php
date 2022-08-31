@@ -5,6 +5,8 @@ use App\Models\Barang;
 use App\Models\peminjaman;
 use App\Models\detailPeminjaman;
 use App\Models\barang_peminjaman;
+use App\Models\detail_barang_peminjaman;
+use App\Models\detail_barang;
 use App\Models\Ormawa;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,6 +33,21 @@ class PeminjamanController extends Controller
             'dp'
         ));
     }
+    public function pengembalian()
+    {
+        $user = User::with('ormawa')->get();
+        $peminjaman = peminjaman::with('user','barang')->orderBy('id','desc')->get();
+        $brg = Barang::all();
+        $orm = Ormawa::all();
+        $dp = barang_peminjaman::all();
+        return view('Peminjaman.pengembalian', compact(
+            'user',
+            'orm',
+            'brg',
+            'peminjaman',
+            'dp'
+        ));
+    }
     public function konfirmasi()
     {
         $user = User::with('ormawa')->get();
@@ -45,6 +62,36 @@ class PeminjamanController extends Controller
             'peminjaman',
             'dp'
         ));
+    }
+    public function validasi()
+    {
+        $user = User::all();
+        $orm = ormawa::all();
+        $peminjaman = peminjaman::with('user')->get();
+        $brg = Barang::all();
+        $dp = barang_peminjaman::all();
+        return view('Peminjaman.validasi', compact(
+            
+            'brg',
+            'peminjaman',
+            'dp',
+            'orm',
+            'user'
+        ));
+    }
+    public function detailPenyerahan($id)
+    {
+        // $dPenyerahan = detail_barang_peminjaman::find($id);
+        $dpenyerahan = DB::table('detail_barang_peminjaman')->where('peminjaman_id',$id)->get();
+        $dbarang = detail_barang::all();
+        $barang = Barang::all();
+
+        return view('Peminjaman.detailPenyerahan', compact(
+            'barang',
+            'dbarang',
+            'dpenyerahan'
+        ));
+        // dd($dpenyerahan);
     }
 
     public function pilihormawa()
@@ -91,6 +138,10 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
+        $validateData = $request->validate([
+            'suratPengajuan'=>'required|mimes:pdf|max:2048',
+            
+          ]);
         $nm = $request->suratPengajuan;
         $nmFile = time() . rand(100, 999) . "." . $nm->getClientOriginalName();
         $nm->move(public_path() . '/pengajuan', $nmFile);
@@ -102,6 +153,7 @@ class PeminjamanController extends Controller
             'tgl_peminjaman' => $request->tgl_peminjaman,
             'tgl_pengembalian' => $request->tgl_pengembalian,
             'status' => "Menunggu",
+            'dari' =>$request->dari,
             'BaPeminjaman' => $request->BaPeminjaman,
             'BaPengembalian' => $request->BaPengembalian,
             'suratPengajuan' => $nmFile
@@ -147,9 +199,64 @@ class PeminjamanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function inputDataBarang($id)
     {
-        //
+        $penyerahan = DB::table('barang_peminjaman')->where('peminjaman_id',$id)->get();
+        $brg = Barang::with('detail_barang')->get();
+        $dbrg = detail_barang::all();
+
+        // $penyerahan = barang_peminjaman::find($id);
+        return view('Peminjaman.penyerahan', compact(
+            'penyerahan',
+            'dbrg',
+            'brg'
+        ));
+        // dd($penyerahan);
+    }
+    public function penyerahan(Request $request)
+    {  
+        $penyerahan = DB::table('barang_peminjaman')->where('peminjaman_id',$request->peminjaman_id)->get();
+        $a = -1;
+        foreach ($penyerahan as $key => $value) {
+        $a ++;
+        $barang_id = $request['barang_id'.$a];
+        for ($i = 0; $i < $value->qty; $i++){
+        $kode_barang = $request['kode_brg'.$a.$i];
+        $simpan = new detail_barang_peminjaman ;
+        $simpan->barang_id = $barang_id;
+        $simpan->peminjaman_id = $request->peminjaman_id;
+        $simpan->kode_brg = $kode_barang;
+        $simpan->save();
+        }
+    }
+        foreach ($penyerahan as $key => $value) {
+            $qtybarang = DB::table('barang')->where('id',$value->barang_id)->get();
+            foreach($qtybarang as $qty){
+                $qtypeminjaman =$value->qty ;
+                $qtyawal = $qty->qty;
+                $akhir = $qtyawal - $qtypeminjaman;
+                $proses = barang::find($value->barang_id);
+                $proses->qty = $akhir;
+                $proses->update();
+            }
+        }
+       
+        
+        $model = peminjaman::find($request->peminjaman_id);
+        $nm = $request->BaPeminjaman;
+        $nmFile = time() . rand(100, 999) . "." . $nm->getClientOriginalName();
+
+        $model->status = "Diserahkan";
+        $model->BaPeminjaman = $nmFile;
+
+        $nm->move(public_path() . '/penyerahan', $nmFile);
+
+            $model->update();
+            return redirect('konfirmasi');
+        ;
+        
+// dd($request);
+        
     }
     public function ubah($id)
     {
@@ -203,6 +310,30 @@ class PeminjamanController extends Controller
     }
     public function kembali(Request $request,$id)
     {
+        
+        $model = peminjaman::find($id);
+        $nm = $request->BaPengembalian;
+        $nmFile = time() . rand(100, 999) . "." . $nm->getClientOriginalName();
+
+        $model->status = "Menunggu Validasi";
+        $model->BaPengembalian = $nmFile;
+
+        $nm->move(public_path() . '/pengembalian', $nmFile);
+
+            $model->save();
+            return redirect('/');
+        ;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function selesai($id)
+    {
         $idpeminjaman =$id;
 
         $idbarang =DB::table('barang_peminjaman')
@@ -221,29 +352,11 @@ class PeminjamanController extends Controller
             }
         }
         $model = peminjaman::find($id);
-        $nm = $request->BaPengembalian;
-        $nmFile = time() . rand(100, 999) . "." . $nm->getClientOriginalName();
-
-        $model->status = "Dikembalikan";
-        $model->BaPengembalian = $nmFile;
-
-        $nm->move(public_path() . '/pengembalian', $nmFile);
+        $model->status = "Selesai";
 
             $model->save();
             return redirect('/');
         ;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
@@ -252,10 +365,5 @@ class PeminjamanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $dp = detailPeminjaman::find($id);
-       $dp ->delete();
-       return redirect('peminjaman');
-    }
+
 }

@@ -30,12 +30,18 @@
                             Selamat Datang, {{ auth()->user()->username }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @if (auth()->user()->hak_akses == 'user')
+                            <li>
+                                <a href="../profil/{{ auth()->user()->id }}" class="dropdown-item"><i class="fas fa-user mr-1"></i> Profil</a>
+                            </li>
+                            @endif
                             <li>
                                 <form action="/logout" method="post">
                                     @csrf
                                     <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right mr-1"></i> Logout</button>
                                 </form>
                             </li>
+                            
                         </ul>
                     </li>
                 @else

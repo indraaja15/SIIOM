@@ -7,7 +7,6 @@
 @section('content')
     <div class="container">
         <div class="card-header">
-
             <div class="card-body">
                 <table class="table table-stripped" id="printp">
                     <thead class="thead">
@@ -57,13 +56,13 @@
                                     <td><span class="badge badge-success text-light">Telah Menerima Barang</span></td>
                                     <td>
                                         <center>
-                                            <a class="btn btn-info fas fa-eye"
+                                            <a class="btn btn-info fas fa-eye" style="width: 170px"
                                                 href="{{ asset('penyerahan/' . $p->BaPeminjaman) }}" target="_blank">
                                                 Lihat Bukti
                                             </a>
                                         </center>
                                     </td>
-                                @elseif ($p->status == 'Dikembalikan')
+                                @elseif ($p->status == '')
                                     <td><span class="badge badge-light text-warning">Telah Mengembalikan Barang</span></td>
                                     <td>
                                         <center>
@@ -79,11 +78,29 @@
                                     </td>
                                 @elseif ($p->status == 'Menunggu')
                                     <td><span class="badge badge-warning">{{ $p->status }}</span></td>
-                                    <td><button class="btn btn-info" disabled>Menunggu Konfirmasi</button></td>
-                                @else
-                                    <td><span class="badge badge-danger">{{ $p->status }}</span></td>
+                                    <td><button class="btn btn-info" disabled>Menunggu Persetujuan</button></td>
+                                @elseif ($p->status == 'Selesai')
+                                    <td class="text-center"><span class="badge badge-danger">{{ $p->status }}</span>
+                                    </td>
                                     <td>
-                                        <center><button class="btn btn-danger" disabled>Ditolak</button></center>
+                                        <center><button class="btn btn-danger" disabled
+                                                style="width: 170px">Selesai</button>
+                                        </center>
+                                    </td>
+                                @elseif ($p->status == 'Menunggu Validasi')
+                                    <td class="text-center"><span class="badge badge-danger">{{ $p->status }}</span>
+                                    </td>
+                                    <td>
+                                        <center><button class="btn btn-danger" disabled
+                                                style="width: 170px">Menunggu</button>
+                                        </center>
+                                    </td>
+                                @else
+                                    <td class="text-center"><span class="badge badge-danger">{{ $p->status }}</span>
+                                    </td>
+                                    <td>
+                                        <center><button class="btn btn-danger" disabled style="width: 170px">Tolak</button>
+                                        </center>
                                     </td>
                                 @endif
                             </tr>

@@ -18,13 +18,6 @@
                                     <img src="{{ asset('img/' . $value->foto) }}" alt="image" class="card-img"
                                         height="180">
                                     <p class="card-text text-center">{{ $value->nm_barang }} <br>
-                                        @if ($value->status == '1')
-                                            Baik
-                                        @elseif ($value->status == '2')
-                                            Cukup Baik
-                                        @else
-                                            Kurang Baik
-                                        @endif
                                     </p>
                                     <p class="card-text text-center">{{ $value->ormawa->nm_ormawa }}</p>
                                 </div>

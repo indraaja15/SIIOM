@@ -41,7 +41,7 @@
             </button>
         </div>
     @endif
-    <h3 class="text-center text-white">SISTEM INFORMASI INVENTARIS ORGANISASI MAHASISWA</h3>
+    <h3 class="text-center text-white">SISTEM INFORMASI INVENTARIS & PEMINJAMAN BARANG ORGANISASI MAHASISWA</h3>
     <img src="images/logoPoliban.png" class="rounded float-left mb-3" width="200">
 
     <div class="login-box ">
@@ -78,7 +78,7 @@
                     </div>
 
                     <button type="submit" class="w-100 btn bt-lg btn-primary mb-3">Login</button>
-                    <center><small>Belum punya akun? <a href="/daftar">Daftar Sekarang!</a></small></center>
+                    {{-- <center><small>Belum punya akun? <a href="/daftar">Daftar Sekarang!</a></small></center> --}}
                     <!-- /.col -->
 
                 </form>

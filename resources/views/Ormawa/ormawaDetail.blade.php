@@ -9,6 +9,7 @@
                     <tr>
                         <th class="text-center"width="1%">No</th>
                         <th class=""width="30%">Nama Organisasi Mahasiswa</th>
+                        <th class=""width="30%">No Telp Organisasi Mahasiswa</th>
                     </tr>
                 </thead>
                 @php
@@ -18,6 +19,7 @@
                     <tr>
                         <td class="text-center">{{ $i }}</td>
                         <td>{{ $value->nm_ormawa }}</td>
+                        <td>{{ $value->no_telp }}</td>
                     </tr>
                     @php
                         $i++;

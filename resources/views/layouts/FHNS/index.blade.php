@@ -5,7 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="{{ url('images/icontab.png') }}">
-    <title>Inventaris Ormawa</title>
+    <script language='JavaScript'>
+        var txt = "Inventaris & Peminjamana Barang Ormawa ";
+        var speed = 300;
+        var refresh = null;
+
+        function action() {
+            document.title = txt;
+            txt = txt.substring(1, txt.length) + txt.charAt(0);
+            refresh = setTimeout("action()", speed);
+        }
+        action();
+    </script>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"

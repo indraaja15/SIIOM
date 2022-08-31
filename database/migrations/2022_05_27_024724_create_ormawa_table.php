@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('ormawa', function (Blueprint $table) {
             $table->id();
             $table->string('nm_ormawa');
+            $table->char('no_telp',16);
             $table->timestamps();
         });
     }
