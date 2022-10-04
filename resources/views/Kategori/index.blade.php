@@ -77,12 +77,6 @@
                                 placeholder="Nama Kategori" required><br>
                             <button type="submit"
                                 class="btn btn-info @error('simpan') is-invalid @enderror">Simpan</button>
-
-                            @error('username')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
                         </div>
                     </div>
                 </form>

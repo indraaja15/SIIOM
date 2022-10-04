@@ -96,13 +96,20 @@ class KategoriController extends Controller
      */
     public function update(Request $request, $id)
     {
-        {
+        
+            $validateData = $request->validate([
+                'nm_kategori'=>'required|unique:kategori,nm_kategori',
+              ]);
             $model = Kategori::find($id);
             $model->nm_kategori = $request->nm_kategori;
-            $model->save();
-    
-            return redirect('kategori');
-        }
+            if ($model->save()) {
+                return redirect('/kategori')->with('success','Kategori Berhasil Diubah !');
+                
+              }else{
+              
+              return back;
+              }
+        
     }
 
     /**
