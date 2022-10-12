@@ -6,19 +6,15 @@
         <div class="card-header">
             <i class="fas fa-edit"></i> <span>Reset Password Ormawa</span><br>
             <div class="card-Body mt-4">
-                <form action="{{ url('daftar/' . $model->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('daftaro/' . $model->id) }}" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         @csrf
                         <select name="ormawa_id" id="ormawa_id"
                             class="form-select mb-4 @error('ormawa_id') is-invalid @enderror" style="width: 100%">
-                            <option disabled value>Pilih Kategori</option>
                             <option value="{{ $model->ormawa_id }}">{{ $model->ormawa->nm_ormawa }}</option>
                         </select>
-
-                        <input type="hidden" name="username" class="form-control" placeholder="Username" id="username"
-                            value="{{ $model->username }}">
                             <input type="text" name="username" class="form-control" placeholder="Username" id="username"
-                            value="{{ $model->username }}"disabled><br>
+                            value="{{ $model->username }}" readonly><br>
                         <input type="password" name="password"
                             class="form-control mb-3 @error('password') is-invalid @enderror" placeholder="Password"
                             id="password">

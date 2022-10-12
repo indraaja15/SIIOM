@@ -80,8 +80,10 @@ class daftarController extends Controller
     }
     public function update(Request $request, $id)
     {
+      $validatePW = $request->validate([
+        'ulangi-password'=>'required|same:password'
+      ]);
       $validateData = $request->validate([
-        'ulangi-password'=>'required|same:password',
         'password' =>'required|min:5',
         'hak_akses'=>'required',
         
@@ -91,8 +93,12 @@ class daftarController extends Controller
             $model->ormawa_id = $request->ormawa_id;
             $model->hak_akses = $request->hak_akses;
             $model->password =  Hash::make($request->password);
-            $model->save();
+            if ($model->save()) {
             return redirect('/daftar')->with('success','Ubah Password Akun Berhasil !');
+            }else{
+            
+            return back;
+            }  
     }
     public function updatekelola(Request $request, $id)
     {

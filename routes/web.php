@@ -41,7 +41,7 @@ Route::Group(['middleware'=>['auth','akses:admin']],function() {
     route::GET('lihat/{id}',[OrmawaController::class,'lihat']);
     route::get('/daftar',[daftarController::class,'index']);
     route::POST('/daftar',[daftarController::class,'store']);
-    route::POST('daftar/{id}',[daftarController::class,'update']);
+    route::POST('daftaro/{id}',[daftarController::class,'update']);
     route::GET('daftar/{id}/edit',[DaftarController::class,'edit']);
 
 
