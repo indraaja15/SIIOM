@@ -36,7 +36,7 @@ class daftarController extends Controller
         'ulangi-password'=>'required|same:password'
       ]);
       $validateData = $request->validate([
-        'ormawa_id'=>'required|unique:users,username',
+        'ormawa_id'=>'required|unique:users,ormawa_id',
         'username' =>'required|unique:users',
         'password' =>'required|min:5',
         'hak_akses'=>'required',
@@ -71,7 +71,7 @@ class daftarController extends Controller
       
       
       if (User::create($validateData)) {
-        return redirect('/kelola')->with('success','Daftar Akun Berhasil !');
+        return redirect('/kelola')->with('success','Daftar Akun Berhasil !!');
         
       }else{
       

@@ -55,6 +55,9 @@ class OrmawaController extends Controller
      */
     public function store(Request $request)
     {
+        $validateData = $request->validate([
+            'nm_ormawa'=>'required|unique:ormawa,nm_ormawa',
+          ]);
         $model = new Ormawa;
         $model->nm_ormawa = $request->nm_ormawa;
         $model->save();
